@@ -27,7 +27,24 @@ python -m venv .venv
 The first run downloads the Whisper model (~500 MB for `small.en`) to
 `~\.cache\huggingface`; after that everything is offline.
 
-## Usage
+## GUI
+
+Double-click **`AutoCaption.bat`** (or run `.\.venv\Scripts\autocaption-gui.exe`).
+A dark-themed window opens where you can:
+
+- **Drag & drop** one or more video/audio files (or click the zone to browse) —
+  files queue up and process one after another
+- Pick **style, position, font (all installed fonts), highlight color, model,
+  language, font size and words per line** from dropdowns/pickers
+- **Preview style** — renders a sample caption frame with your current settings
+  before you process anything
+- Watch live progress in the log, **cancel** mid-run, and jump straight to the
+  result with **Open output folder**
+
+Your settings are remembered between launches
+(`%APPDATA%\autocaption\settings.json`).
+
+## CLI usage
 
 ```powershell
 .\.venv\Scripts\autocaption.exe clip.mp4                     # default "pop" style

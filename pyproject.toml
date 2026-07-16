@@ -4,15 +4,20 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "autocaption"
-version = "0.1.0"
+version = "0.2.0"
 description = "Free local karaoke-style auto captions for shorts/reels (Whisper + ASS + FFmpeg)"
 requires-python = ">=3.10"
 dependencies = [
     "faster-whisper>=1.0.0",
+    "customtkinter>=5.2.0",
+    "tkinterdnd2>=0.4.0",
 ]
 
 [project.scripts]
 autocaption = "autocaption.cli:main"
+
+[project.gui-scripts]
+autocaption-gui = "autocaption.gui:main"
 
 [tool.setuptools]
 packages = ["autocaption"]
