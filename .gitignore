@@ -1,0 +1,14 @@
+# environments / caches
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+
+# generated media & subtitle outputs
+demo/
+*.captioned.mp4
+*.ass
+*.davinci.srt
+
+# GUI state
+settings.json
