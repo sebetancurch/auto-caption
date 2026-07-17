@@ -3,6 +3,8 @@
 __pycache__/
 *.pyc
 *.egg-info/
+build/
+dist/
 
 # generated media & subtitle outputs
 demo/
