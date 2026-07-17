@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import os
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -20,41 +19,14 @@ def _default_model(device: str, language: str | None) -> str:
     return f"{size}.en" if language == "en" else size
 
 
-def _add_nvidia_pip_dirs_to_path() -> None:
-    """Let CUDA DLLs from `pip install nvidia-cublas-cu12 nvidia-cudnn-cu12` be found."""
-    import site
-
-    roots: list[str] = []
-    try:
-        roots += site.getsitepackages()
-    except Exception:
-        pass
-    bin_dirs = [str(d) for root in roots for d in Path(root).glob("nvidia/*/bin")]
-    if bin_dirs:
-        os.environ["PATH"] = os.pathsep.join(bin_dirs) + os.pathsep + os.environ.get("PATH", "")
-
-
-def _cuda_usable() -> bool:
-    """True when CUDA inference can actually work, so device="auto" never
-    downloads a GPU-sized model just to fail loading it."""
+def _cuda_available() -> bool:
+    """Cheap GPU probe so device="auto" never downloads a GPU-sized model in vain."""
     try:
         import ctranslate2
 
-        if ctranslate2.get_cuda_device_count() == 0:
-            return False
+        return ctranslate2.get_cuda_device_count() > 0
     except Exception:
         return False
-    if sys.platform == "win32":
-        # a visible GPU is not enough: ctranslate2 also needs these runtime DLLs
-        import ctypes
-
-        _add_nvidia_pip_dirs_to_path()
-        for dll in ("cublas64_12.dll", "cudnn64_9.dll"):
-            try:
-                ctypes.CDLL(dll)
-            except OSError:
-                return False
-    return True
 
 
 def transcribe(
@@ -70,7 +42,7 @@ def transcribe(
     needs cuBLAS/cuDNN DLLs that are not installed by default on Windows.
     """
     attempts: list[tuple[str, str]] = []
-    if device == "cuda" or (device == "auto" and _cuda_usable()):
+    if device == "cuda" or (device == "auto" and _cuda_available()):
         attempts.append(("cuda", "float16"))
     if device in ("auto", "cpu"):
         attempts.append(("cpu", "int8"))
