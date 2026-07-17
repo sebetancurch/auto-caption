@@ -25,18 +25,28 @@ autocaption clip.mp4
    → clip.davinci.srt     karaoke SRT for DaVinci Resolve's subtitle track
 ```
 
-## Install
+## Quick start (no coding needed)
 
-**Requirements:** [Python 3.10+](https://www.python.org/downloads/) and
-[FFmpeg](https://ffmpeg.org/download.html).
+1. **Install two things** (one time):
+   [Python 3.10+](https://www.python.org/downloads/) — on Windows, tick
+   **"Add python.exe to PATH"** in the installer — and FFmpeg
+   (`winget install Gyan.FFmpeg` / `brew install ffmpeg` / `sudo apt install ffmpeg`)
+2. **[Download the ZIP](https://github.com/sebetancurch/auto-caption/archive/refs/heads/main.zip)**
+   of this project and unzip it anywhere
+3. **Open the app:**
+   - **Windows** — double-click **`AutoCaption.bat`**
+   - **macOS** — right-click **`AutoCaption.command`** → Open (only the first
+     time; double-click after that)
+   - **Linux** — `bash AutoCaption.command`
+
+The first launch installs everything automatically (a few minutes); every
+launch after that is instant. Then just drop a video in, pick a style, and hit
+**Generate**. The first transcription downloads a Whisper model (~500 MB, one
+time) — after that everything works offline.
+
+## Install for developers (CLI)
 
 ```bash
-# 1. FFmpeg (skip if you have it)
-#    Windows:      winget install Gyan.FFmpeg
-#    macOS:        brew install ffmpeg
-#    Linux:        sudo apt install ffmpeg
-
-# 2. Get the code and install
 git clone https://github.com/sebetancurch/auto-caption
 cd auto-caption
 python -m venv .venv
@@ -44,17 +54,16 @@ python -m venv .venv
 pip install -e .
 ```
 
-The first run downloads a Whisper model (~500 MB for the default CPU model) to
-your Hugging Face cache; after that everything works offline.
-
 ## The GUI
 
 ![Auto-Caption GUI](docs/gui.png)
 
 | Platform | Launch |
 |----------|--------|
-| Windows  | double-click **`AutoCaption.bat`** (or `autocaption-gui`) |
-| macOS / Linux | `autocaption-gui` (or `python -m autocaption.gui`) |
+| Windows  | double-click **`AutoCaption.bat`** (installs itself the first time) |
+| macOS    | double-click **`AutoCaption.command`** (first time: right-click → Open) |
+| Linux    | `bash AutoCaption.command` |
+| Any (dev install) | `autocaption-gui` or `python -m autocaption.gui` |
 
 - **Drag & drop** one or more video/audio files — they queue up and process
   one after another
