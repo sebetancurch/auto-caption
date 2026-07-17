@@ -1,17 +1,43 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "autocaption"
-version = "0.2.0"
+version = "1.0.0"
 description = "Free local karaoke-style auto captions for shorts/reels (Whisper + ASS + FFmpeg)"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Sergio Betancur Chaves" }]
 requires-python = ">=3.10"
+keywords = [
+    "captions", "subtitles", "karaoke", "whisper", "ffmpeg",
+    "shorts", "tiktok", "reels", "video-editing",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: End Users/Desktop",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Multimedia :: Video",
+]
 dependencies = [
     "faster-whisper>=1.0.0",
     "customtkinter>=5.2.0",
     "tkinterdnd2>=0.4.0",
 ]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.urls]
+Homepage = "https://github.com/sebetancurch/auto-caption"
+Repository = "https://github.com/sebetancurch/auto-caption"
+Issues = "https://github.com/sebetancurch/auto-caption/issues"
 
 [project.scripts]
 autocaption = "autocaption.cli:main"
@@ -21,3 +47,6 @@ autocaption-gui = "autocaption.gui:main"
 
 [tool.setuptools]
 packages = ["autocaption"]
+
+[tool.setuptools.package-data]
+autocaption = ["fonts/*"]
